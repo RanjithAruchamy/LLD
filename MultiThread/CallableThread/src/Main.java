@@ -12,6 +12,6 @@ public class Main {
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         Future<List<Integer>> futureList = executorService.submit(arrayCreator);
         System.out.println(futureList.get());
-        executorService.close();
+        executorService.shutdown();
     }
 }
