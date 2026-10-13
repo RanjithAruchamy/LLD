@@ -1,3 +1,5 @@
+import exceptions.InvalidQuantityException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -9,7 +11,11 @@ public class Inventory<T extends Item> {
         this.items = new HashMap<>();
     }
 
-    public void addItem(T item) {
+    public void addItem(T item) throws InvalidQuantityException {
+        if (item.getQuantity() <= 0) {
+            throw new InvalidQuantityException("Quantity cannot be zero..");
+        }
+
         items.putIfAbsent(getId(item), item);
     }
 

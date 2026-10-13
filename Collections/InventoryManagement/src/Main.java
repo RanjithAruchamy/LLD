@@ -5,6 +5,7 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        System.out.println(Runtime.getRuntime().availableProcessors());
         Item i1 = new Electronics(1, "Mobile", 10, 50000d, 1);
         Item i2 = new Electronics(2, "TV", 5, 20000d, 2);
         Item i3 = new Clothing(3, "Shirt", 7, 1200d, "S");
@@ -13,10 +14,7 @@ public class Main {
         List<Item> items = new java.util.ArrayList<>(List.of(i1, i2, i3, i4));
 
         Collections.sort(items);
-
-        for (Item item : items) {
-            System.out.println(item);
-        }
+        items.forEach(System.out::println);
         System.out.println("\nItem Creation completed, Inventory creation begins\n");
 
         Electronics mobile = new Electronics(1, "Mobile", 10, 50000d, 1);
@@ -59,5 +57,20 @@ public class Main {
         orderProcessor.processOrder();
 
         System.out.println(orderProcessor.getAllOrders());
+
+        List<String> names = items.stream()
+                .filter(item -> item.getPrice() > 1000 && item.getQuantity() > 0)
+                .map(Item::getName)
+                .distinct()
+                .sorted()
+                .limit(2)
+                .toList();
+
+        items.stream()
+                .map(Item::getQuantity)
+                .reduce(Integer::sum)
+                .orElse(0);
+
+
     }
 }
